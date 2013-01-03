@@ -28,7 +28,7 @@ def setup(self):
     idd.properties = prop
     global ice
     ice = Ice.initialize(idd)
-    ice.getImplicitContext().put("secret", icesecret.encode("utf-8"))
+    ice.getImplicitContext().put("secret", icesecret)
     global Murmur
     import Murmur
     ## Set up threaded checker
@@ -70,8 +70,14 @@ def mumble_auto_loop(phenny):
 
 def get_server(phenny):
     """Returns the mumble server"""
-    mumble_ip     = phenny.config.mumble_ip
-    mumble_port   = phenny.config.mumble_port or "6502"
+    try:
+        mumble_ip     = phenny.config.mumble_ip
+    except:
+        mumble_ip     = "127.0.0.1"
+    try:
+        mumble_port   = phenny.config.mumble_port
+    except:
+        mumble_port   = "6502"
 
     if not mumble_ip:
         phenny.say("mumble is not configured")
@@ -80,7 +86,7 @@ def get_server(phenny):
     connstring = "Meta:tcp -h %s -p %s" % (mumble_ip, mumble_port)
 
     global ice
-    proxy = ice.stringToProxy( connstring.encode("utf-8") )
+    proxy = ice.stringToProxy( connstring )
 
     global Murmur
     meta = Murmur.MetaPrx.checkedCast(proxy)
@@ -121,4 +127,4 @@ mumble_users.priority = 'medium'
 
 
 if __name__ == '__main__': 
-   print __doc__.strip()
+   print(__doc__.strip())
