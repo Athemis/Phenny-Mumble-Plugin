@@ -107,6 +107,16 @@ def mumble_send(phenny, input):
 mumble_send.commands = ['mumblesend']
 mumble_send.priority = 'medium'
 
+def mumble_channels(phenny, input):
+    """Shows a list of channels."""
+    server = get_server(phenny)
+
+    channels = server.getChannels()
+    if len(channels) == 0:
+        phenny.say("no channels available")
+        return
+   
+    print(channels)
 
 def mumble_users(phenny, input): 
     """Shows the users connected to mumble."""
