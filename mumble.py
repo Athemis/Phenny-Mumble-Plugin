@@ -142,6 +142,18 @@ def get_channels_hirarchy(server):
             del channels_tree[k]
             
     return channels_tree
+  
+def get_users(server):
+    users = server.getUsers()
+    print(users)
+    if len(users) == 0:
+        phenny.say("no users connected")
+        return
+    names = []
+    for key in users:
+        name = users[key].name
+        names.append(name)
+    return names
 
 def mumble_send(phenny, input):
     """Sends a message to mumble server"""
@@ -151,21 +163,21 @@ def mumble_send(phenny, input):
     except:
         message = None
     try:
-        channel = input.groups()[1].split('|')[1].strip().lower()
+        receiver = input.groups()[1].split('|')[1].strip().lower()
     except:
-        channel = None
+        receiver = None
     try:
         tree = bool(input.groups()[1].split('|')[2].strip())
     except:
         tree = False
-    if message and not channel:
+    if message and not receiver:
         server.sendMessageChannel(0, True, message)
         phenny.say("Message sent to first channel tree")
-    elif message and channel:
+    elif message and receiver:
         id_name = get_channels_id_name(server)
         sent = False
         for id, name in id_name:
-            if channel == id or channel == name:
+            if receiver == id or receiver == name:
                 server.sendMessageChannel(int(id), tree, message)
                 phenny.say("Message sent to mumble channel '{}'".format(name))
                 sent = True
@@ -186,11 +198,7 @@ def mumble_users(phenny, input):
     """Shows the users connected to mumble."""
     server = get_server(phenny)
 
-    users = server.getUsers()
-    if len(users) == 0:
-        phenny.say("no users connected")
-        return
-    names = []
+    names = get_users(server)
     for key in users:
         name = users[key].name
         names.append(name)
