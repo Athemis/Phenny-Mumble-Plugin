@@ -34,11 +34,13 @@ def setup(self):
     ## Set up threaded checker
     t = threading.Timer(20.0, mumble_auto_loop, [self])
     t.start()
+    
+setup.thread = False
 
 
 def mumble_auto_loop(phenny):
     server = get_server(phenny)
-    users = server.getUsers()
+    users = get_users(server)
     usernames = []
     for uk in users:
         usernames.append(users[uk].name)
@@ -145,9 +147,9 @@ def get_channels_hirarchy(server):
   
 def get_users(server):
     users = server.getUsers()
-    if len(users) == 0:
-        phenny.say("no users connected")
-        return
+    #if len(users) == 0:
+        #phenny.say("no users connected")
+        #return
     #for key in users:
         #name = users[key].name
         #users.append(name)
@@ -208,6 +210,10 @@ def mumble_users(phenny, input):
     server = get_server(phenny)
     users = get_users(server)
     names = []
+    
+    if len(users) == 0:
+        phenny.say("no users connected")
+        return
     
     for key in users:
         name = users[key].name
