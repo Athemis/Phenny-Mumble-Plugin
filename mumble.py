@@ -148,7 +148,10 @@ def mumble_send(phenny, input):
     server = get_server(phenny)
     message = input.group(1)
     channel = input.group(2)
-    tree = input.group(3)
+    try:
+        tree = input.group(3)
+    except:
+        tree = False
 #    try:
 #        message = input.groups()[1].split('|')[0]
 #    except:
