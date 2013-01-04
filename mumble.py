@@ -146,23 +146,18 @@ def get_channels_hirarchy(server):
 def mumble_send(phenny, input):
     """Sends a message to mumble server"""
     server = get_server(phenny)
-    message, channel = input.group(1), input.group(2)
     try:
-        tree = input.group(3)
+        message = input.groups()[1].split('|')[0]
+    except:
+        message = None
+    try:
+        channel = input.groups()[1].split('|')[1]
+    except:
+        channel = None
+    try:
+        tree = bool(input.groups()[1].split('|')[2])
     except:
         tree = False
-#    try:
-#        message = input.groups()[1].split('|')[0]
-#    except:
-#        message = None
-#    try:
-#        channel = input.groups()[1].split('|')[1]
-#    except:
-#        channel = None
-#    try:
-#        tree = bool(input.groups()[1].split('|')[2])
-#    except:
-#        tree = False
     if message and not channel:
         server.sendMessageChannel(0, True, message)
         phenny.say("Message sent to first channel tree")
