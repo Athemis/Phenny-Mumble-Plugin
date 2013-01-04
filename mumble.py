@@ -215,7 +215,7 @@ def mumble_status(phenny):
     phenny.say("The mumble server is {}".format(status))
 
 mumble_status.commands = ['mumblestatus']
-mumble_status.priority = low
+mumble_status.priority = 'low'
 mumble_status.example = '.mumblestatus'
 
 if __name__ == '__main__': 
