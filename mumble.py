@@ -196,9 +196,9 @@ def mumble_users(phenny, input):
         names.append(name)
     phenny.say(", ".join(names))
 
-mumble_users.commands = ['mumble']
+mumble_users.commands = ['mumble_user', 'mumble_users']
 mumble_users.priority = 'medium'
-mumble_users.example = '.mumble'
+mumble_users.example = '.mumble_user'
 
 
 def mumble_status(phenny):
