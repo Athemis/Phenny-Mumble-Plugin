@@ -151,7 +151,7 @@ def get_users(server):
     #for key in users:
         #name = users[key].name
         #users.append(name)
-    return user
+    return users
 
 def mumble_send(phenny, input):
     """Sends a message to mumble server"""
