@@ -146,8 +146,7 @@ def get_channels_hirarchy(server):
 def mumble_send(phenny, input):
     """Sends a message to mumble server"""
     server = get_server(phenny)
-    message = input.group(1)
-    channel = input.group(2)
+    message, channel = input.group(1), input.group(2)
     try:
         tree = input.group(3)
     except:
