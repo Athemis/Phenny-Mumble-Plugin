@@ -3,10 +3,12 @@ It provides various commands to access the mumble server (Murmur)
 
 To install this plugin, add the following settings to ~/.phenny/default.py
 
-mumble_ip     = "127.0.0.1"
-mumle_port    = "6502"
-mumble_slice  = "/path/to/Murmur.ice"
-mumble_secret = "mymumblesecret"
+mumble_ip             = "127.0.0.1"
+mumle_port            = "6502"
+mumble_slice          = "/path/to/Murmur.ice"
+mumble_secret         = "mymumblesecret"
+# Interval to check for new users in murmur
+mumble_check_interval = 10
 # Auto alert these channels when someone joins
 mumble_channels = ["#mychannel"]
 

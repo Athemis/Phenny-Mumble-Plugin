@@ -47,7 +47,7 @@ def mumble_auto_loop(phenny):
         phenny.msg(r, ", ".join(usernames))
 
     while(True):
-        time.sleep(10)
+        time.sleep(phenny.config.mumble_check_interval)
         server = get_server(phenny)
         users = server.getUsers()
         currentusers = []
@@ -196,9 +196,8 @@ def mumble_users(phenny, input):
         names.append(name)
     phenny.say(", ".join(names))
 
-mumble_users.commands = ['mumble_user', 'mumble_users']
+mumble_users.commands = ['mumble_user']
 mumble_users.priority = 'medium'
-mumble_users.thread = False
 mumble_users.example = '.mumble_user'
 
 
