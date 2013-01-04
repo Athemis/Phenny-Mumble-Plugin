@@ -199,9 +199,7 @@ def mumble_users(phenny, input):
     server = get_server(phenny)
 
     names = get_users(server)
-    for key in users:
-        name = users[key].name
-        names.append(name)
+
     phenny.say(", ".join(names))
 
 mumble_users.commands = ['mumble_user']
