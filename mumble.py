@@ -200,7 +200,7 @@ def mumble_users(phenny, input):
 
 mumble_users.commands = ['mumble']
 mumble_users.priority = 'medium'
-mumble_user.example = '.mumble'
+mumble_users.example = '.mumble'
 
 
 def mumble_status(phenny):
