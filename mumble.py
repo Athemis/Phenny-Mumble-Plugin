@@ -145,15 +145,13 @@ def get_channels_hirarchy(server):
   
 def get_users(server):
     users = server.getUsers()
-    print(users)
     if len(users) == 0:
         phenny.say("no users connected")
         return
-    names = []
-    for key in users:
-        name = users[key].name
-        names.append(name)
-    return names
+    #for key in users:
+        #name = users[key].name
+        #users.append(name)
+    return user
 
 def mumble_send(phenny, input):
     """Sends a message to mumble server"""
@@ -183,7 +181,18 @@ def mumble_send(phenny, input):
                 sent = True
                 break
         if not sent:
-            phenny.say("Unknown mumble channel '{}'".format(channel))
+            users = get_users(server)
+            
+            for key in users:
+                name = users[key].name.lower()
+                session = users[key].session
+                
+                if receiver == name:
+                    server.sendMessage(session, message)
+                    sent = true
+            
+        if not sent:
+            phenny.say("Unknown mumble channel/user '{}'".format(channel))
     else:
         phenny.say("usage:")
         phenny.say("global message                    : .mumble_send <text>")
@@ -197,8 +206,12 @@ mumble_send.example = '.mumble_send Hello World'
 def mumble_users(phenny, input): 
     """Shows the users connected to mumble."""
     server = get_server(phenny)
-
-    names = get_users(server)
+    users = get_users(server)
+    names = []
+    
+    for key in users:
+        name = users[key].name
+        names.append(name)
 
     phenny.say(", ".join(names))
 
