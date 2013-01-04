@@ -118,7 +118,7 @@ def get_channels_id_name(server):
     id_name = []
 
     for id, c in channels.items():
-        id_name.append( (c['id'], c['name']) )
+        id_name.append( (c['id'], c['name'].lower()) )
 
     return id_name
 
@@ -140,24 +140,22 @@ def get_channels_hirarchy(server):
     for k in channels.keys():
         if channels[k]['parent'] != '-1':
             del channels_tree[k]
-
-    pp = pprint.PrettyPrinter(depth=6)
-    pp.pprint(channels_tree)
+            
     return channels_tree
 
 def mumble_send(phenny, input):
     """Sends a message to mumble server"""
     server = get_server(phenny)
     try:
-        message = input.groups()[1].split('|')[0]
+        message = input.groups()[1].split('|')[0].strip()
     except:
         message = None
     try:
-        channel = input.groups()[1].split('|')[1]
+        channel = input.groups()[1].split('|')[1].strip().lower()
     except:
         channel = None
     try:
-        tree = bool(input.groups()[1].split('|')[2])
+        tree = bool(input.groups()[1].split('|')[2].strip())
     except:
         tree = False
     if message and not channel:
@@ -176,13 +174,13 @@ def mumble_send(phenny, input):
             phenny.say("Unknown mumble channel '{}'".format(channel))
     else:
         phenny.say("usage:")
-        phenny.say("global message                    : .mumblesend <text>")
-        phenny.say("message to channel                : .mumblesend <text>|<channel id/name>")
-        phenny.say("message to channel and subchannels: .mumblesend <text>|<channel id/name>|1")
+        phenny.say("global message                    : .mumble_send <text>")
+        phenny.say("message to channel                : .mumble_send <text>|<channel id/name>")
+        phenny.say("message to channel and subchannels: .mumble_send <text>|<channel id/name>|1")
 
-mumble_send.commands = ['mumblesend']
+mumble_send.commands = ['mumble_send']
 mumble_send.priority = 'medium'
-mumble_send.example = '.mumblesend Hello World'
+mumble_send.example = '.mumble_send Hello World'
 
 def mumble_users(phenny, input): 
     """Shows the users connected to mumble."""
