@@ -226,7 +226,7 @@ mumble_users.priority = 'medium'
 mumble_users.example = '.mumble_user'
 
 
-def mumble_status(phenny):
+def mumble_status(phenny, input):
     """Shows the server's status"""
     server = get_server(phenny)
 
@@ -237,9 +237,9 @@ def mumble_status(phenny):
 
     phenny.say("The mumble server is {}".format(status))
 
-mumble_status.commands = ['mumblestatus']
+mumble_status.commands = ['mumble_status']
 mumble_status.priority = 'low'
-mumble_status.example = '.mumblestatus'
+mumble_status.example = '.mumble_status'
 
 if __name__ == '__main__': 
    print(__doc__.strip())
