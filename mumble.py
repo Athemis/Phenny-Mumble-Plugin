@@ -198,6 +198,7 @@ def mumble_users(phenny, input):
 
 mumble_users.commands = ['mumble_user', 'mumble_users']
 mumble_users.priority = 'medium'
+mumble_users.thread = False
 mumble_users.example = '.mumble_user'
 
 
