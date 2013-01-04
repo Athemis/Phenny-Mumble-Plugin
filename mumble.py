@@ -58,15 +58,17 @@ def mumble_auto_loop(phenny):
                 usernames.index(name)
             except:
                 for r in recip:
-                    phenny.msg(r, name + " has joined mumble")
+                    phenny.msg(r, "{} has joined mumble".format(name))
                 usernames.append(name)
         for name in usernames:
             try:
                 currentusers.index(name)
             except:
                 for r in recip:
-                    phenny.msg(r, name + " has left mumble")
+                    phenny.msg(r, "{} has left mumble".format(name))
                 usernames.remove(name)
+                
+mumble_auto_loop.thread = False
 
 def get_server(phenny):
     """Returns the mumble server"""
@@ -198,6 +200,7 @@ def mumble_users(phenny, input):
 
 mumble_users.commands = ['mumble']
 mumble_users.priority = 'medium'
+mumble_user.example = '.mumble'
 
 
 def mumble_status(phenny):
