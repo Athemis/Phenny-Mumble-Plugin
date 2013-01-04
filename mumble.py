@@ -13,7 +13,6 @@ http://mumble.sourceforge.net/Ice
 
 import Ice
 import threading, time
-import pprint
 
 def setup(self):
     """Sets up ICE"""
@@ -147,19 +146,21 @@ def get_channels_hirarchy(server):
 def mumble_send(phenny, input):
     """Sends a message to mumble server"""
     server = get_server(phenny)
-    print(input.groups())
-    try:
-        message = input.groups()[1].split()[0]
-    except:
-        message = None
-    try:
-        channel = input.groups()[1].split()[1]
-    except:
-        channel = None
-    try:
-        tree = bool(input.groups()[1].split()[2])
-    except:
-        tree = False
+    message = input.group(1)
+    channel = input.group(2)
+    tree = input.group(3)
+#    try:
+#        message = input.groups()[1].split('|')[0]
+#    except:
+#        message = None
+#    try:
+#        channel = input.groups()[1].split('|')[1]
+#    except:
+#        channel = None
+#    try:
+#        tree = bool(input.groups()[1].split('|')[2])
+#    except:
+#        tree = False
     if message and not channel:
         server.sendMessageChannel(0, True, message)
         phenny.say("Message sent to first channel tree")
@@ -177,11 +178,12 @@ def mumble_send(phenny, input):
     else:
         phenny.say("usage:")
         phenny.say("global message                    : .mumblesend <text>")
-        phenny.say("message to channel                : .mumblesend <text> <channel id/name>")
-        phenny.say("message to channel and subchannels: .mumblesend <text> <channel id/name> 1")
+        phenny.say("message to channel                : .mumblesend <text>|<channel id/name>")
+        phenny.say("message to channel and subchannels: .mumblesend <text>|<channel id/name>|1")
 
 mumble_send.commands = ['mumblesend']
 mumble_send.priority = 'medium'
+mumble_send.example = '.mumblesend Hello World'
 
 def mumble_users(phenny, input): 
     """Shows the users connected to mumble."""
@@ -200,6 +202,21 @@ def mumble_users(phenny, input):
 mumble_users.commands = ['mumble']
 mumble_users.priority = 'medium'
 
+
+def mumble_status(phenny):
+    """Shows the server's status"""
+    server = get_server(phenny)
+
+    if server.isRunning():
+        status = "online"
+    else:
+        status = "offline"
+
+    phenny.say("The mumble server is {}".format(status))
+
+mumble_status.commands = ['mumblestatus']
+mumble_status.priority = low
+mumble_status.example = '.mumblestatus'
 
 if __name__ == '__main__': 
    print(__doc__.strip())
