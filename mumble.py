@@ -189,7 +189,7 @@ def mumble_send(phenny, input):
                 
                 if receiver == name:
                     server.sendMessage(session, message)
-                    sent = true
+                    sent = True
             
         if not sent:
             phenny.say("Unknown mumble channel/user '{}'".format(channel))
